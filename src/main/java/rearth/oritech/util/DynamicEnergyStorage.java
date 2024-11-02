@@ -45,14 +45,10 @@ public class DynamicEnergyStorage extends SnapshotParticipant<Long> implements E
         StoragePreconditions.notNegative(maxAmount);
         
         long inserted = Math.min(maxInsert, Math.min(maxAmount, capacity - amount));
-        
-        if (inserted > 0) {
-            updateSnapshots(transaction);
-            amount += inserted;
-            return inserted;
-        }
-        
-        return 0;
+        if (inserted <= 0) return 0;
+        updateSnapshots(transaction);
+        amount += inserted;
+        return inserted;
     }
     
     @Override
@@ -66,13 +62,10 @@ public class DynamicEnergyStorage extends SnapshotParticipant<Long> implements E
         
         long extracted = Math.min(maxExtract, Math.min(maxAmount, amount));
         
-        if (extracted > 0) {
-            updateSnapshots(transaction);
-            amount -= extracted;
-            return extracted;
-        }
-        
-        return 0;
+        if (extracted <= 0) return 0;
+        updateSnapshots(transaction);
+        amount -= extracted;
+        return extracted;
     }
     
     @Override
