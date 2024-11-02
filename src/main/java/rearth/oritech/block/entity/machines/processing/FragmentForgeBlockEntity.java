@@ -93,23 +93,18 @@ public class FragmentForgeBlockEntity extends MultiblockMachineEntity {
     
     @Override
     public List<ItemStack> getCraftingResults(OritechRecipe activeRecipe) {
-        if (hasByproductAddon) {
-            var result = new ArrayList<ItemStack>(activeRecipe.getResults().size());
-            var source = activeRecipe.getResults();
-            for (int i = 0; i < source.size(); i++) {
-                var item = source.get(i);
-                if (i == 0) {
-                    result.add(item);
-                } else {
-                    var newCount = item.getCount() * 2;
-                    var newItem = new ItemStack(item.getItem(), newCount);
-                    result.add(newItem);
-                }
-            }
-            return result;
-        } else {
-            return super.getCraftingResults(activeRecipe);
+        if (!hasByproductAddon) return super.getCraftingResults(activeRecipe);
+        var source = activeRecipe.getResults();
+        var size = source.size();
+        var result = new ArrayList<ItemStack>(size);
+        if  (size > 0) result.add(0);
+        for (int i = 1; i < size; i++) {
+            var item = source.get(i);
+            var newCount = item.getCount() * 2;
+            var newItem = new ItemStack(item.getItem(), newCount);
+            result.add(newItem);
         }
+        return result;
     }
     
     @Override
