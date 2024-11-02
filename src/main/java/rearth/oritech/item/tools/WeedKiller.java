@@ -18,8 +18,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WeedKiller extends Item {
-    protected static final int maxRange=20;
-    protected static final int spreadRange=3;
+    protected static final int WEEDKILLER_MAX_RANGE=20;
+    protected static final int WEEDKILLER_SPREAD_RANGE=3;
     public WeedKiller(Settings settings) {
         super(settings);
     }
@@ -46,16 +46,16 @@ public class WeedKiller extends Item {
         while (!open.isEmpty()) {
             var candidate = open.pop();
             
-            for (int x = -spreadRange; x <= spreadRange; x++) {
+            for (int x = -WEEDKILLER_SPREAD_RANGE; x <= WEEDKILLER_SPREAD_RANGE; x++) {
                 for (int y = -1; y <= 1; y++) {
-                    for (int z = -spreadRange; z <= spreadRange; z++) {
+                    for (int z = -WEEDKILLER_SPREAD_RANGE; z <= WEEDKILLER_SPREAD_RANGE; z++) {
                         
                         var target = new BlockPos(candidate.add(x,y,z));
                         
                         if (visited.contains(target)) continue;
                         var distance = target.getManhattanDistance(startPos);
                         
-                        if (isWeedBlock(target, world) && distance < maxRange) {
+                        if (isWeedBlock(target, world) && distance < WEEDKILLER_MAX_RANGE) {
                             open.add(target);
                             world.setBlockState(target, Blocks.AIR.getDefaultState());
                             
