@@ -18,6 +18,8 @@ import java.util.HashSet;
 import java.util.List;
 
 public class WeedKiller extends Item {
+    protected static final int maxRange=20;
+    protected static final int spreadRange=3;
     public WeedKiller(Settings settings) {
         super(settings);
     }
@@ -37,9 +39,6 @@ public class WeedKiller extends Item {
     }
     
     private void doWeedKilling(World world, BlockPos startPos) {
-        
-        var maxRange = 20;
-        var spreadRange = 3;
         var visited = new HashSet<BlockPos>();
         var open = new ArrayDeque<BlockPos>();
         open.add(startPos);
