@@ -159,15 +159,10 @@ public class CentrifugeBlockEntity extends MultiblockMachineEntity implements Fl
         
         // check if output fluid fits
         var output = recipe.getFluidOutput();
-        if (output != null) {
-            if (output.variant().getFluid().equals(Fluids.EMPTY) || outputStorage.amount == 0)
-                return true;  // no output stored
-            if (outputStorage.amount + output.amount() > outputStorage.getCapacity()) return false; // output full
-            return outputStorage.variant.equals(output.variant());  // type check
-        }
-        
-        return true;
-        
+        if (output == null) return true;
+        if (output.variant().getFluid().equals(Fluids.EMPTY) || outputStorage.amount == 0) return true;  // no output stored
+        if (outputStorage.amount + output.amount() > outputStorage.getCapacity()) return false; // output full
+        return outputStorage.variant.equals(output.variant());  // type check
     }
     
     @Override
